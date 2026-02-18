@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Experiment outputs (large telemetry data)
+outputs/
+*.parquet
+*.arrow
+
+# Data (generated shards, model downloads)
+data/vectors/
+data/embeddings/
+data/models/
+
+# Model artifacts
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.gguf
+
+# ChromaDB persistent storage
+chroma_db/
+*.chroma
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets / environment
+.env
+.env.local
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# mypy
+.mypy_cache/
+
+# ruff
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/

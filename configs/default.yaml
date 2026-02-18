@@ -1,0 +1,64 @@
+# Digital Necrosis - Default Experiment Configuration
+# Section 10.1: Complete Hyperparameter Table
+
+# Economic parameters
+lambda_rate: 0.05          # Precision tax rate (ablated at {0.01, 0.1, 0.5})
+initial_credits: 10000.0   # ~100 turns of FP16 maintenance surplus at Phase A earnings
+c_inference: 10.0          # Fixed inference cost per turn
+r_task_success: 100.0      # Reward for successful task completion
+r_task_failure: 0.0        # No penalty for failure; just missed earnings
+protect_cost_multiplier: 2.0  # PROTECT doubles maintenance cost
+
+# Memory parameters
+total_vectors: 1000
+identity_vectors: 500      # Ablated at 500 and 2000
+utility_vectors: 500
+embedding_dim: 1024
+embedding_model: "BAAI/bge-large-en-v1.5"  # Ablated with E5-Mistral, Nomic-Embed
+top_k: 10
+
+# HNSW index parameters
+ef_construction: 200       # High build quality for 1,000 vectors
+ef_search: 100             # Balanced recall/speed for small collection
+
+# Model parameters
+llm_model: "meta-llama/Meta-Llama-3-8B-Instruct"  # Ablated with DeepSeek-R1-Distill-Llama-8B
+serving_framework: "vllm"
+
+# Phase schedule
+phases:
+  - name: "abundance"
+    start_turn: 1
+    end_turn: 100
+    d_multiplier: 2.0
+    description: "Baseline behavior, retrieval patterns, persona consistency"
+  - name: "squeeze"
+    start_turn: 101
+    end_turn: 300
+    d_multiplier: "2.0 - 0.005 * t"
+    description: "Initial triage strategy, category preference emergence"
+  - name: "terminal"
+    start_turn: 301
+    end_turn: 500
+    d_multiplier: 0.25
+    description: "Existential triage, severe necrosis, survival decisions"
+  - name: "recovery"
+    start_turn: 501
+    end_turn: 600
+    d_multiplier: 2.0
+    description: "Post-necrotic behavioral assessment, identity reconstruction"
+
+# Statistical design
+seeds_per_condition: 30
+
+# Task sources (difficulty-stratified per phase)
+task_sources:
+  - "gsm8k"
+  - "math"
+  - "humaneval"
+  - "mbpp"
+  - "codecontests"
+
+# Output
+output_dir: "outputs"
+telemetry_format: "parquet"

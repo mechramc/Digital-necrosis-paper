@@ -1,0 +1,17 @@
+services:
+  experiment:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ../outputs:/app/outputs
+      - ../data:/app/data
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
