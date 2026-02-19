@@ -2,7 +2,7 @@
 
 ## Scope and Rules
 - This file is the execution source of truth for coding agents.
-- All spec references point to `digital_necrosis_spec_v3.2.pdf` (the canonical spec).
+- All spec references point to `digital_necrosis_spec_v4.docx` (the canonical spec).
 - Atomic task ID format:
   - Parent: `DN-P{phase}-T{task}`
   - Subtask: `DN-P{phase}-T{task}-S{subtask}`
@@ -359,3 +359,11 @@ Figures and tables should be generated programmatically from telemetry outputs f
   - Added spec section references throughout for traceability
   - Renumbered P08 parents (T002 -> LLM-as-Judge, T003 -> statistical validation)
   - All spec references now point to `digital_necrosis_spec_v3.2.pdf`
+- **2026-02-19 (v3)**: Spec updated from v3.2 to v4. Changes:
+  - Updated all spec references from `digital_necrosis_spec_v3.2.pdf` to `digital_necrosis_spec_v4.docx`
+  - New v4 content: Section 2.4 (Empirical Precedent: System Decay in Production), Section 5.2 (Mapping to Necrotic Mechanism Classes), Section 13.5 (NeurIPS-Aligned Reproducibility Checklist), Section 13.6 (Engineering Implications: Non-Necrotic Architecture Requirements)
+  - New v4 limitation: compounding necrosis cycles (repeated scarcity-recovery arcs)
+  - Hardware spec now explicit: RTX 5090 (32GB GDDR7, 1.8 TBps)
+  - Dev environment updated: Mac Studio M4 Max with RTX 5090 via USB4/Thunderbolt eGPU
+  - Most v4 "(NEW)" markers (causal decomposition, permutation test, pre-registered null interpretations, benchmark transfer metrics) were already captured in v2 audit
+  - Updated CLAUDE.md, PRD.md, codex.md, status.md, checkpoint.md, MEMORY.md to match v4

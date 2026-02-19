@@ -65,6 +65,7 @@ Foundation baseline exists (config, precision API, metrics, tests). Next executi
 | 2026-02-18 | Use `Planned/InProgress/Blocked/Done` status model | Consistent, low-friction multi-agent workflow |
 | 2026-02-18 | Update checkpoint every work session end | Reliable cross-agent continuity |
 | 2026-02-18 | tasks.md v2 spec audit — expanded from 69 to 93 atomic tasks | Closed gaps in controls, forensics, stats, dataset validation, ablations |
+| 2026-02-19 | Spec updated from v3.2 to v4 — all docs aligned | v4 adds empirical precedent, necrotic mechanism mapping, engineering implications, NeurIPS checklist, compounding necrosis cycles |
 
 ## Next 7 Priorities
 1. Start `DN-P02-T001-S01` quantization API implementation.

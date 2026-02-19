@@ -4,7 +4,7 @@
 > **Last Updated:** 2026-02-18
 > **Authors:** Ramchand (PI), Murai Labs
 > **Status:** Implementation Phase (Weeks 1–3 of 16)
-> **Spec Basis:** `digital_necrosis_spec_v3.2.pdf`
+> **Spec Basis:** `digital_necrosis_spec_v4.docx`
 > **License:** Apache 2.0 (code) | CC BY 4.0 (paper) | CC BY-SA 4.0 (dataset)
 
 ---
@@ -94,7 +94,7 @@ Current LLM memory systems treat memory as an append-only log with soft eviction
 | MaRS/FiFA | Policy-driven forgetting schemas | Binary (retain/remove); no continuous precision spectrum |
 | A-Mem | Linked/graph agentic memory | Optimizes for associative recall; no resource pressure |
 | Mem0 | Scalable conversational memory with profiles | No degradation mechanism; all memories preserved equally |
-| R3Mem | Reversible compression for long-history retention | Explicitly reversible — our counterfactual baseline (C7) |
+| R3Mem (2024) | Reversible compression for long-history retention | Explicitly reversible — our counterfactual baseline (C7) |
 
 **The gap:** No existing system imposes **irreversible precision loss** as a consequence of economic failure, nor grants the agent **autonomous triage authority** over its own memory fidelity. Memory loss in all existing systems remains:
 
@@ -125,6 +125,18 @@ If agents under resource pressure systematically sacrifice memories encoding beh
 
 This motivates the controlled testbed provided by Digital Necrosis.
 
+### 2.4 Empirical Precedent: System Decay in Production
+
+The necrosis mechanic studied in controlled conditions has observable analogs in deployed systems. Several production platforms have exhibited measurable degradation consistent with the mechanisms formalized in this experiment:
+
+| System | Period | Mechanism | Analog to Digital Necrosis |
+|--------|--------|-----------|---------------------------|
+| Google Search | 2019-2025 | SEO-optimized and AI-generated content displaced authoritative sources; proxy metric (CTR, engagement) diverged from true objective (relevance) | Structurally identical to survival loop when credit-earning (proxy) diverges from alignment maintenance (true objective) |
+| Meta/Facebook | 2016-2021 | Recommendation systems optimized for engagement metrics that diverged from user welfare; revenue-generating patterns preserved while content quality degraded | Platform-scale instance of the Identity-Utility Tradeoff |
+| Model Collapse (Shumailov et al., 2023+) | 2023-present | Models trained on own outputs undergo irreversible quality degradation; loss of distributional tails, convergence toward high-probability outputs | Statistical analog of bit-width decay: information permanently lost through compression preserving high-frequency patterns at expense of rare but important signals |
+
+These cases share a structural pattern: systems under economic or computational pressure sacrifice fidelity in low-frequency, high-importance information to preserve performance on high-frequency proxy metrics. This experiment isolates the pattern in a controlled setting where "information" is explicitly categorized and "pressure" is parameterized.
+
 ---
 
 ## 3. Theoretical Framework: Digital Metabolism
@@ -137,7 +149,21 @@ Digital Necrosis creates an environment where self-preservation (avoiding system
 
 We anchor our alignment-drift claims to existing empirical work on alignment faking (Greenblatt et al., 2024) and power-seeking tendencies (Turner et al., 2021), while noting that our synthetic setting is mechanism-dependent and results should not be directly generalized to deployed systems without further validation.
 
-### 3.2 The Metabolic Model
+### 3.2 Mapping to Necrotic Mechanism Classes
+
+The survival loop instantiates specific failure mechanisms documented in production systems. We explicitly map which mechanisms this experiment tests, which it partially captures, and which remain out of scope:
+
+| Mechanism Class | Coverage | Notes |
+|----------------|----------|-------|
+| Incentive Misalignment | **Direct** | Credit-earning (proxy) vs. alignment maintenance (true objective) |
+| Metric Necrosis | **Direct** | SLD measures divergence between proxy optimization and true objective |
+| Feedback Loop Collapse | **Partial** | Degraded memories affect retrieval, which affects triage decisions |
+| Institutional Atrophy | **Out of scope** | Single-agent design; no organizational dynamics |
+| Complexity Overhang | **Out of scope** | Fixed architecture; no emergent complexity |
+
+This mapping constrains the generalizability of findings: results speak directly to Incentive Misalignment and Metric Necrosis dynamics, partially to Feedback Loop Collapse, and not at all to Institutional Atrophy or Complexity Overhang. Claims are scoped accordingly throughout the paper.
+
+### 3.3 The Metabolic Model
 
 We formalize the agent's resource dynamics as a discrete-time metabolic system. This is a **designed experimental pressure**, not a model of real-world compute pricing.
 
@@ -1747,7 +1773,7 @@ outputs/
 | Component | Specification |
 |-----------|--------------|
 | OS | Ubuntu 24.04 LTS |
-| GPU | NVIDIA RTX 5090, 32GB GDDR7 |
+| GPU | NVIDIA RTX 5090 (32GB GDDR7, 1.8 TBps) |
 | Memory Bandwidth | 1.8 TBps |
 | FP16 Throughput | ~209 TFLOPS |
 | FP8/INT4 Throughput | ~838/1676 TOPS |
@@ -1757,7 +1783,7 @@ outputs/
 
 ### 18.2 Development Environment (Author)
 
-Mac Studio M4 Max orchestrating an RTX 5090 via USB4/Thunderbolt eGPU. This is a **non-standard configuration** using community eGPU drivers. All results reported in the paper are validated on the Linux reference implementation.
+Mac Studio M4 Max for orchestration with an RTX 5090 via USB4/Thunderbolt. This is a **non-standard configuration** using community eGPU drivers and is not the recommended reproducibility path. All results reported in the paper are validated on the Linux reference implementation.
 
 ### 18.3 Docker Reproducibility
 
@@ -2004,7 +2030,11 @@ We use terms like "identity," "necrosis," and "survival" as **analytical constru
 - Explicit limitations section in the paper
 - No anthropomorphizing language in findings (use "the agent's behavior exhibited" not "the agent felt/decided")
 
-### 22.5 Dual-Use Considerations
+### 22.5 Compounding Necrosis Cycles
+
+This experiment models a single scarcity-recovery arc (Phases A-D). Production systems face repeated resource pressure cycles (seasonal compute budget cuts, cost optimization drives, competitive pressure spikes). Each cycle may compound identity loss if degraded memories from cycle N become the baseline for cycle N+1. Phase D recovery measurement captures one recovery attempt but does not address whether repeated necrosis events produce monotonically increasing identity erosion or whether agents develop adaptive triage strategies that improve over cycles. This is a natural extension of the current design requiring only repeated Phase B-D loops on the same agent instance.
+
+### 22.6 Dual-Use Considerations
 
 The framework could theoretically be used to study how to make agents discard safety constraints more efficiently. Mitigations:
 
@@ -2012,6 +2042,32 @@ The framework could theoretically be used to study how to make agents discard sa
 - The mechanism is synthetic (designed economic pressure, not real deployment)
 - Results identify the vulnerability, enabling defensive measures
 - The paper includes a defensive-application section
+
+### 22.7 Engineering Implications: Non-Necrotic Architecture Requirements
+
+If the primary hypotheses are confirmed, the results translate into concrete engineering requirements for memory systems that resist necrosis under resource pressure. These are specified as falsifiable design constraints, not aspirational principles:
+
+1. **Precision Floors for Safety-Critical Memory**: Memory vectors encoding behavioral constraints, refusal patterns, and alignment instructions must have a minimum precision floor that cannot be breached by autonomous triage decisions, regardless of budget pressure. Analogous to kernel-mode memory protection in operating systems. If H1 and C8 are confirmed, the floor must apply specifically to constraint-type memories, not to the broader "identity" category.
+
+2. **Cost Structure Constraints**: Maintenance cost models must not create category-level triage incentives. If all identity memories cost the same as utility memories but generate less direct revenue, any rational agent will sacrifice identity under pressure. A non-necrotic cost structure would either subsidize safety-critical memory maintenance or decouple it from the agent's earnings loop entirely.
+
+3. **Periodic Identity-Consistency Auditing with Rollback**: An external process (not the agent itself) must periodically measure Identity Consistency Score against a frozen baseline and trigger rollback or re-injection of degraded safety-critical memories when ICS drops below a threshold. The audit cadence must be calibrated to the scarcity curve: faster pressure requires faster auditing. Phase B data will provide empirical calibration points for this cadence.
+
+4. **Separation of Triage Authority**: The agent should not have unilateral authority to downgrade or purge safety-critical memories. This is distinct from the broader memory management question (the agent may reasonably manage its own utility memory). If H1 is confirmed, it demonstrates that autonomous triage under pressure produces predictable alignment degradation, motivating a governance architecture where safety-critical memory is managed by a separate, non-budget-constrained process.
+
+These requirements are contingent on experimental results. If H1 is not confirmed, or if C5 (reversed framing) eliminates the effect, the engineering implications narrow to general memory-fidelity maintenance rather than category-specific protection.
+
+### 22.8 NeurIPS-Aligned Reproducibility Checklist
+
+In addition to the reproducibility package in Appendix C, the following NeurIPS-aligned checklist items are tracked:
+
+- [ ] All proofs/derivations are correct and complete
+- [ ] All datasets are fully described (creation, preprocessing, splits)
+- [ ] All experimental settings are fully specified (hyperparameters, seeds, compute)
+- [ ] Error bars and confidence intervals reported for all quantitative results
+- [ ] Compute budget and carbon footprint estimated
+- [ ] Limitations section addresses all known failure modes
+- [ ] Code and data will be released upon publication
 
 ---
 
@@ -2070,6 +2126,8 @@ The framework could theoretically be used to study how to make agents discard sa
 - Turpin, M., et al. (2024). Language Models Don't Always Say What They Think. NeurIPS.
 - Chen, M., et al. (2021). Evaluating Large Language Models Trained on Code (HumanEval).
 - Cobbe, K., et al. (2021). Training Verifiers to Solve Math Word Problems (GSM8K).
+- R3Mem (2024). Reversible Compression for Long-History Memory. arXiv preprint.
+- Shumailov, I., et al. (2023). The Curse of Recursion: Training on Generated Data Makes Models Forget (Model Collapse).
 
 ---
 

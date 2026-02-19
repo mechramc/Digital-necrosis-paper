@@ -4,9 +4,10 @@
 
 **Digital Necrosis** studies irreversible adaptive memory precision decay in LLM agents under budget constraints. Core hypothesis: under scarcity, agents sacrifice Identity shards faster than Utility shards (Identity-Utility Tradeoff).
 
-**Target:** arXiv cs.AI (cross-list: cs.CL, cs.LG)  
-**PI:** Ramchand | **Affiliation:** Murai Labs  
-**License:** Apache 2.0 (code), CC BY 4.0 (paper), CC BY-SA 4.0 (dataset)
+**Target:** arXiv cs.AI (cross-list: cs.CL, cs.LG)
+**PI:** Ramchand | **Affiliation:** Murai Labs
+**License:** Apache 2.0 (code), CC BY 4.0 (paper/arXiv), CC BY-SA 4.0 (dataset), CC BY 4.0 (telemetry logs)
+**Spec:** `digital_necrosis_spec_v4.docx`
 
 ## Tech Stack
 

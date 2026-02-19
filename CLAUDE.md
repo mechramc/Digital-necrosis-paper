@@ -6,7 +6,7 @@
 
 **Target:** arXiv cs.AI (cross-list: cs.CL, cs.LG)
 **PI:** Ramchand | **Affiliation:** Murai Labs
-**License:** Apache 2.0 (code), CC BY 4.0 (paper), CC BY-SA 4.0 (dataset)
+**License:** Apache 2.0 (code), CC BY 4.0 (paper/arXiv), CC BY-SA 4.0 (dataset), CC BY 4.0 (telemetry logs)
 
 ## Tech Stack
 
@@ -19,7 +19,7 @@
 | Embedding (ablation) | E5-Mistral, Nomic-Embed | - |
 | Vector DB | ChromaDB | 0.5.x + custom precision wrapper |
 | Serving | vLLM with PagedAttention | FP16 fixed |
-| GPU | NVIDIA RTX 5090 | CUDA 12.8+ |
+| GPU | NVIDIA RTX 5090 (32GB GDDR7, 1.8 TBps) | CUDA 12.8+ |
 | Telemetry | Parquet via PyArrow | - |
 | Stats | SciPy, statsmodels | - |
 | Reproducibility | Docker (Ubuntu 24.04 LTS) | - |

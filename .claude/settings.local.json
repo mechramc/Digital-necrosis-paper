@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd project scaffolding, spec-audited task plan, and foundation implementations\n\nComplete project bootstrap: config system, precision API, metrics module,\nquantization/agent/dataset/evaluation stubs, Docker setup, and CLI scaffolds.\nTasks.md v2 expands to 93 atomic tasks after thorough spec S8.1/S9.3/S8.3\naudit fixing control condition definitions, adding inner monologue forensics,\nstatistical test decomposition, and dataset validation pipeline.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(pandoc:*)",
+      "Bash(where:*)",
+      "Bash(pip show:*)",
+      "Bash(pip install:*)",
+      "Bash(python -c:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAlign all project docs with spec v4 \\(from v3.2\\)\n\nUpdates tasks.md, CLAUDE.md, PRD.md, codex.md, status.md, checkpoint.md\nto reference digital_necrosis_spec_v4.docx. Adds new v4 content to PRD:\nempirical precedent \\(Section 2.4\\), necrotic mechanism mapping \\(Section 3.2\\),\ncompounding necrosis cycles, engineering implications, and NeurIPS checklist.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
